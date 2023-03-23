@@ -1,0 +1,8 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+data/data_LCAvars/
+data/data_LCAvars_noncens/
+data/data_pheno/
+webappMLmodels/

@@ -115,7 +115,7 @@ ui <- dashboardPage(
         ),
         sidebarPanel(
           radioButtons("mlModelChoice",
-                       "Select a Machine Learning that is based on:",
+                       "Assign clusters using a machine-learning algorithm trained upon:",
                        choices = c("Data Available at First Vist",
                                    "First visit data + disease duration (Censored + censored people)",
                                    "First visit data + disease duration (Censored + non-censored people)"),

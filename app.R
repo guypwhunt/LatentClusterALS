@@ -117,7 +117,7 @@ ui <- dashboardPage(
           radioButtons("mlModelChoice",
                        "Assign clusters using a machine-learning algorithm trained upon:",
                        choices = c("Data Available at First Vist",
-                                   "First visit data + disease duration (Censored + censored people)",
+                                   "First visit data + disease duration (Non-censored people only)",
                                    "First visit data + disease duration (Censored + non-censored people)"),
                        selected = "Data Available at First Vist"),
           br(),
@@ -305,7 +305,7 @@ server <- function(input, output, session) {
       if(input$mlModelChoice == "Data Available at First Vist"){
         mlModel <- firstVisitMLModel
         ldaModel <- firstVisiLdaModel
-      } else if (input$mlModelChoice == "First visit data + disease duration (Censored + censored people)") {
+      } else if (input$mlModelChoice == "First visit data + disease duration (Non-censored people only)") {
         mlModel <- nonCensoredMLModel
         ldaModel <- fullLdaModel
       } else {

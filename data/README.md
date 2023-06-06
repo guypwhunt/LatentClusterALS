@@ -60,4 +60,4 @@ A.I is funded by the Motor Neurone Disease Association. This study represents in
 
 The views expressed are those of the authors and not necessarily those of the NHS, the NIHR, King’s College London, or the Department of Health and Social Care.
 
-We acknowledge the use of and are thankful to the people who have generously contributed to Project MINE and Strength ALS consortia.
+We acknowledge the use of data from the Project MINE and Strength ALS consortia; we are thankful to the people who have generously contributed to these initiatives.

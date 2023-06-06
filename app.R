@@ -108,19 +108,22 @@ ui <- dashboardPage(
           br(),
           br(),
           br(),
+          br(),
+          br(),
+          br(),
           actionButton("clusteringButton", "Perform Clustering")
         ),
         sidebarPanel(
           radioButtons("mlModelChoice",
                        "Select a Machine Learning that is based on:",
                        choices = c("Data Available at First Vist",
-                                   "Uncensored Patient's Data",
-                                   "Censored and Uncensored Patient's Data"),
+                                   "First visit data + disease duration (Censored + censored people)",
+                                   "First visit data + disease duration (Censored + non-censored people)"),
                        selected = "Data Available at First Vist"),
           br(),
           selectInput(
             "phenotypicColumn",
-            "Select a Phenotypic Column",
+            "Select a Phenotypic Trait to Display (when hovering over data points)",
             NULL,
             selected = NULL,
             multiple = FALSE,
@@ -302,7 +305,7 @@ server <- function(input, output, session) {
       if(input$mlModelChoice == "Data Available at First Vist"){
         mlModel <- firstVisitMLModel
         ldaModel <- firstVisiLdaModel
-      } else if (input$mlModelChoice == "Uncensored Patient's Data") {
+      } else if (input$mlModelChoice == "First visit data + disease duration (Censored + censored people)") {
         mlModel <- nonCensoredMLModel
         ldaModel <- fullLdaModel
       } else {
@@ -324,12 +327,17 @@ server <- function(input, output, session) {
             subselectedDf$CTYDEL
         } else {
           subselectedDf <-
-            objects$phenotypicDf[objects$phenotypicDf$Country_of_Diagnosis ==  country,]
+            objects$phenotypicDf[objects$phenotypicDf$Country_of_Diagnosis == country,]
 
-          subselectedDf[, "CTYDEL"] <-
-            scaleToPanel(subselectedDf[, "CTYDEL"],
-                         ID = "Total",
-                         panel = delay_panel)
+          if(nrow(subselectedDf) < 30) {
+            subselectedDf[, "CTYDEL"] <-
+              scaleToPanel(subselectedDf[, "CTYDEL"],
+                           ID = "Total",
+                           panel = delay_panel)
+          } else {
+            showNotification(29)
+            subselectedDf[, "CTYDEL"] <- scale(subselectedDf[, "CTYDEL"])
+          }
 
           objects$phenotypicDf[objects$phenotypicDf$Country_of_Diagnosis ==  country, "CTYDEL"] <-
             subselectedDf$CTYDEL
